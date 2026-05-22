@@ -1,14 +1,327 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter from Dad 爸爸的信</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background-color: #f5efe6;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    font-family: 'Cormorant Garamond', 'Georgia', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .page {
+    max-width: 660px;
+    width: 100%;
+    animation: fadeIn 2s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .petal-row {
+    font-size: 22px;
+    letter-spacing: 8px;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+
+  .subtitle {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #9b7b6a;
+    font-family: 'IM Fell English', serif;
+  }
+
+  .letter {
+    background-color: #fdf8f1;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 31px,
+        rgba(180,150,120,0.10) 31px,
+        rgba(180,150,120,0.10) 32px
+      ),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    border: 1px solid rgba(180,150,120,0.3);
+    border-top: 4px solid #c9a68a;
+    border-radius: 2px;
+    padding: 3rem 3.5rem 2.5rem;
+    box-shadow:
+      0 2px 8px rgba(120,80,50,0.08),
+      0 8px 32px rgba(120,80,50,0.06),
+      inset 0 0 60px rgba(200,170,140,0.06);
+    position: relative;
+  }
+
+  .letter::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 40px;
+    width: 1px;
+    height: 100%;
+    background: rgba(180,140,110,0.18);
+  }
+
+  .salutation {
+    font-size: 22px;
+    font-style: italic;
+    color: #5c3d2e;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .body p {
+    font-size: 17px;
+    line-height: 2;
+    color: #3d2b1f;
+    margin-bottom: 1.4rem;
+    font-weight: 300;
+  }
+
+  .body p .highlight {
+    font-weight: 400;
+    border-bottom: 1px solid rgba(180,130,100,0.4);
+    padding-bottom: 1px;
+  }
+
+  .body p .chinese {
+    font-style: italic;
+    color: #7a4f3a;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(180,150,120,0.3);
+    margin: 2rem 0 1.5rem;
+  }
+
+  .sign-off {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .sign-off-text p {
+    font-size: 15px;
+    color: #9b7b6a;
+    font-style: italic;
+    margin-bottom: 6px;
+  }
+
+  .sign-off-text .name {
+    font-size: 26px;
+    font-style: italic;
+    color: #5c3d2e;
+    font-weight: 300;
+  }
+
+  .seal {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(180,130,100,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0.55;
+  }
+
+  .seal span {
+    font-size: 11px;
+    color: #9b7b6a;
+    letter-spacing: 1px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #b0957e;
+    text-transform: uppercase;
+    font-family: 'IM Fell English', serif;
+  }
+
+  /* Music player */
+  .music-bar {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: rgba(253,248,241,0.92);
+    border: 1px solid rgba(180,150,120,0.3);
+    border-radius: 32px;
+    padding: 8px 18px 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(100,60,30,0.12);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: #7a4f3a;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    user-select: none;
+    transition: box-shadow 0.2s;
+  }
+
+  .music-bar:hover { box-shadow: 0 6px 24px rgba(100,60,30,0.18); }
+
+  .music-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #c9a68a;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .music-btn svg { fill: #fff; }
+
+  .music-note {
+    font-size: 16px;
+    animation: bounce 1.8s ease-in-out infinite;
+    display: inline-block;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  .music-label { font-style: italic; opacity: 0.8; }
+
+  @media (max-width: 600px) {
+    .letter { padding: 2rem 1.5rem 2rem; }
+    .letter::before { left: 24px; }
+    body { padding: 1.5rem 1rem; }
+  }
+</style>
+</head>
 <body>
-  <p>                                    
-    Dear Bik Kwan, 
-As part of your 嫁妝, I will be giving you 1200 shares of Keppel Corp. The purpose of 嫁妝 is not just a gift for marriage, but also a small foundation from parents to give their daughter security, blessings, and support for her future family life. 
-    The shares collect dividends over time, so please keep them forever and only touch the principal if you are ever in serious need of money. 
-    When you are more settled down and have more time, maybe by the end of the year or next year, I will transfer the shares into your CDP account so that they officially belong to you.
-With love,
-Dad
-    
-    </p>
+
+<div class="page">
+  <div class="header">
+    <div class="petal-row">🌸 🌷 🌸</div>
+    <div class="subtitle">爸爸的信 &nbsp;·&nbsp; A Letter from Dad</div>
+  </div>
+
+  <div class="letter">
+    <p class="salutation">Dear Bik Kwan,</p>
+
+    <div class="body">
+      <p>
+        As part of your <span class="chinese">嫁妝</span>, I will be giving you
+        <span class="highlight">1,200 shares of Keppel Corp.</span>
+      </p>
+
+      <p>
+        The purpose of <span class="chinese">嫁妝</span> is not just a gift for marriage,
+        but also a small foundation from parents to give their daughter security,
+        blessings, and support for her future family life.
+      </p>
+
+      <p>
+        The shares collect dividends over time, so please keep them forever
+        and only touch the principal if you are ever in serious need of money.
+      </p>
+
+      <p>
+        When you are more settled down and have more time — maybe by the end
+        of the year or next year — I will transfer the shares into your
+        CDP account so that they officially belong to you.
+      </p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="sign-off">
+      <div class="sign-off-text">
+        <p>With love,</p>
+        <div class="name">Dad &nbsp;爸爸</div>
+      </div>
+      <div class="seal">
+        <span>❤️</span>
+        <span style="font-size:10px; margin-top:2px;">With love</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">With blessings for your new chapter &nbsp;·&nbsp; 祝福你的新旅程</div>
+</div>
+
+<!-- Music player -->
+<div class="music-bar" onclick="toggleMusic()">
+  <button class="music-btn" aria-label="Play or pause music">
+    <svg id="play-icon" width="12" height="14" viewBox="0 0 12 14"><path d="M2 1l10 6-10 6V1z"/></svg>
+    <svg id="pause-icon" width="12" height="14" viewBox="0 0 12 14" style="display:none"><rect x="1" y="1" width="4" height="12" rx="1"/><rect x="7" y="1" width="4" height="12" rx="1"/></svg>
+  </button>
+  <span class="music-note" id="note">♩</span>
+  <span class="music-label" id="music-label">Play music</span>
+</div>
+
+<audio id="bgmusic" loop>
+  <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Moonlight_Sonata_%28Beethoven%29_-_Wikimedia_2019_upload.flac/Moonlight_Sonata_%28Beethoven%29_-_Wikimedia_2019_upload.flac.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const audio = document.getElementById('bgmusic');
+  const playIcon = document.getElementById('play-icon');
+  const pauseIcon = document.getElementById('pause-icon');
+  const label = document.getElementById('music-label');
+  const note = document.getElementById('note');
+  let playing = false;
+  const notes = ['♩','♪','♫','♬'];
+  let ni = 0;
+
+  function toggleMusic() {
+    if (!playing) {
+      audio.volume = 0.35;
+      audio.play().then(() => {
+        playing = true;
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = '';
+        label.textContent = 'Moonlight Sonata';
+        setInterval(() => { note.textContent = notes[ni++ % 4]; }, 600);
+      }).catch(() => {
+        label.textContent = 'Could not autoplay';
+      });
+    } else {
+      audio.pause();
+      playing = false;
+      playIcon.style.display = '';
+      pauseIcon.style.display = 'none';
+      label.textContent = 'Play music';
+    }
+  }
+</script>
+
 </body>
 </html>
